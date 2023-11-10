@@ -1,5 +1,10 @@
 key_git
-model/*
+data/*.jpg
+model/digits/*.h5
+
+model/wpod_model/
+model/lisence/*
+*.ipynb
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
