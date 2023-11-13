@@ -1,9 +1,16 @@
 key_git
 data/*.jpg
-model/digits/*.h5
+data/
+PaddleOCR/
 
+model/digits/
 model/wpod_model/
-model/lisence/*
+model/lisence/
+
+alpr-unconstrained/
+
+.vscode/
+
 *.ipynb
 # Byte-compiled / optimized / DLL files
 __pycache__/

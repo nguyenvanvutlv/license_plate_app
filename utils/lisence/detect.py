@@ -2,6 +2,10 @@ import torch
 from utils.opencv.draw import draw_boxes
 from super_gradients.training import models
 from super_gradients.common.object_names import Models
+import utils.lisence.darknet as dn
+from utils.lisence.darknet import detect
+from model.wpod_process.label import dknet_label_conversion
+from model.wpod_process.utils import nms
 
 
 class ObjectDetection:
@@ -62,3 +66,26 @@ class YoloNAS(ObjectDetection):
             return 1, image_draw, croped
         else:
             return None, image, None
+
+
+class OCRLicense:
+    def __init__(self, weights, netcfg, dataset, ocr_threshold) -> None:
+        ocr_weights = weights.encode('utf-8')
+        ocr_netcfg = netcfg.encode('utf-8')
+        ocr_dataset = dataset.encode('utf-8')
+
+        self.ocr_net = dn.load_net(ocr_netcfg, ocr_weights, 0)
+        self.ocr_meta = dn.load_meta(ocr_dataset)
+        self.ocr_threshold = ocr_threshold
+
+    def run(self, img):
+        R, (_w, _h) = detect(self.ocr_net, self.ocr_meta,
+                             img, thresh=self.ocr_threshold, nms=None)
+
+        # print(R, _w, _h)
+        if len(R):
+            L = dknet_label_conversion(R, _w, _h)
+            L = nms(L, 0.45)
+            L.sort(key=lambda x: x.tl()[0])
+            lp_str = ''.join([chr(l.cl()) for l in L])
+            print(lp_str)

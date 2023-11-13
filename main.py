@@ -1,3 +1,4 @@
+import paddle
 import cv2
 import os
 import imutils
@@ -11,6 +12,7 @@ from utils.opencv import (
 import time
 from utils.lisence.detect import YoloNAS
 from utils.wpod.detect import Wpodnet
+from utils.lisence.detect import OCRLicense
 import torch
 torch.cuda.set_device(0)
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -32,27 +34,27 @@ class App:
         self.width = 1024
         self.height = 720
 
+        self.ocr = OCRLicense(weights="model/digits/ocr-net.weights",
+                              netcfg="model/digits/ocr-net.cfg",
+                              dataset="model/digits/ocr-net.data",
+                              ocr_threshold=0.4)
+
         self.cropped = None
         self.output_wpod = None
         self.thresh = None
 
     def process(self, image):
         img = image.copy()
-        img = imutils.resize(img, self.width, self.height)
+        # img = imutils.resize(img, self.width, self.height)
         _status, frame, _croped = self.yolonas.predict(img)
         if _status is None:
             return
         self.cropped = _croped
         self.output_wpod = self.wpodnet.run(
             self.cropped).astype(np.float32) * 255
+        print(np.max(self.output_wpod), np.min(self.output_wpod))
 
-        gray = cv2.cvtColor(self.output_wpod, cv2.COLOR_RGB2GRAY)
-        # blurred = cv2.GaussianBlur(gray, (7, 7), 0).astype((np.uint8))
-        self.thresh = cv2.adaptiveThreshold(
-            gray.astype((np.uint8)), 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 21, 10)
-        
-        
-        return frame
+        return _status
 
     def run(self):
         # self.video = self.video.start()
@@ -65,7 +67,11 @@ class App:
                 # frame = cv2.flip(frame, 1)
                 if frame is not None:
                     # CODE HERE
-                    self.process(frame)
+
+                    _status = self.process(frame)
+                    if _status is not None:
+                        self.ocr.run(self.output_wpod)
+
                     # CODE HERE
                     self.fps.stop()
                     self.fps.update()
@@ -91,5 +97,5 @@ class App:
 
 
 if __name__ == "__main__":
-    app = App(video_source="data/abc.mp4", flip=True)
+    app = App(video_source="data/test.mp4", flip=True)
     app.run()
