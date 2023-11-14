@@ -2,6 +2,7 @@ key_git
 data/*.jpg
 data/
 PaddleOCR/
+.idea/
 
 model/digits/
 model/wpod_model/

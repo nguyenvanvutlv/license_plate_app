@@ -88,4 +88,5 @@ class OCRLicense:
             L = nms(L, 0.45)
             L.sort(key=lambda x: x.tl()[0])
             lp_str = ''.join([chr(l.cl()) for l in L])
-            print(lp_str)
+            return lp_str
+        return "NONE"
