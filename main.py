@@ -18,7 +18,6 @@ class App:
     def __init__(self, video_source=0, window_name="lisence") -> None:
         self.video = camera.Camera(video_source)
         # self.video = cv2.VideoCapture(video_source)
-        self.fps = fps.FPS()
         self.window_name = window_name
 
         self.yolonas = YoloNAS("model/lisence/ckpt_best.pth")
@@ -49,7 +48,6 @@ class App:
         self.video = self.video.start()
         try:
             while True:
-                self.fps.start()
                 self.frame = self.video.read()
                 # res, self.frame = self.video.read()
                 # if self.flip:
@@ -59,12 +57,6 @@ class App:
                     self.process(self.frame)
 
                     # CODE HERE
-                    self.fps.stop()
-                    self.fps.update()
-                    self.frame = draw.putText(
-                        self.frame, f'FPS: {self.fps.fps()}', (20, 20))
-
-
 
                     cv2.imshow(self.window_name, self.frame)
                     if cv2.waitKey(1) & 0xFF == ord('x'):
