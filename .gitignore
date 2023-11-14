@@ -1,4 +1,18 @@
 key_git
+data/*.jpg
+data/
+PaddleOCR/
+.idea/
+
+model/digits/
+model/wpod_model/
+model/lisence/
+
+alpr-unconstrained/
+
+.vscode/
+
+*.ipynb
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
