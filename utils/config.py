@@ -4,7 +4,6 @@
 this file get all parameters for system, load model detection, ocr
 """
 import argparse
-# from super_gradients.training import models
 from utils.licence.detect import YOLOv8
 from utils.ocr.detect import OCRLicence
 
