@@ -1,38 +1,14 @@
-# license_plate_app
+# GUI
 
-## License plate detection
+```bash
+rm -r build
+cd Tkinter-Designer
+python gui/gui.py
 
-YOLO NAS
+# enter link and API token
 
-- status: ok
+# https://www.figma.com/file/2JIYnvxdBJoJlkOW4tHuEb/main?type=design&node-id=0-1&mode=design&t=y9pBGRuMgbuIyPEx-0
 
+# figd_NR4Y2arxBKeLTglskl5gjt90SEu79r7V9IWj_t1f
 
-## License plate Unwarping
-
-WPOD NET
-
-- status: ok
-
-
-## License plate OCR
-
-- license: 1 row, 2 row
-
-
-
-QUY TRÌNH: 
-
-- detect YoLo 
-
-- ratio
-
-    - ratio in [0.8, 1.5] -> xe máy 
-    - ratio in [3 ,  6]   -> ô tô
-
-- 
-
-# BUG
-
-- load Cudnn
-
-- Failed to load image Python extension, build from source: https://download.pytorch.org/whl/torchvision/
+```

@@ -1,17 +1,10 @@
-v2/
-key_git
-data/*.jpg
-data/
-PaddleOCR/
+
+
+Tkinter-Designer/
 .idea/
-
-model/digits/
-model/wpod_model/
-model/lisence/
-
-alpr-unconstrained/
-
 .vscode/
+model/
+
 
 *.ipynb
 # Byte-compiled / optimized / DLL files
