@@ -23,7 +23,7 @@ def putText(origin, text, pos):
 def draw_boxes(origin, bbox):
     img = origin.copy()
     for i, box in enumerate(bbox):
-        x1, y1, x2, y2 = [int(i) for i in box]
+        x1, y1, x2, y2 = [int(j) for j in box]
         color = getColor(0)
         cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
     return img

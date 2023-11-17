@@ -3,4 +3,5 @@ opencv-python==4.7.0
 torch==2.1.0
 torchvision==0.16.0
 torchaudio==2.1.0
-super_gradients==3.4.1
+tkinter==8.6
+Pillow==9.4.0

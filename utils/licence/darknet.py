@@ -49,7 +49,8 @@ class METADATA(Structure):
                 ("names", POINTER(c_char_p))]
 
 
-lib = CDLL("model/lisence/libdarknet.so", RTLD_GLOBAL)
+lib = CDLL(
+    "model/recognition/libdarknet.so", RTLD_GLOBAL)
 # lib = CDLL("darknet/libdarknet.so", RTLD_GLOBAL)
 lib.network_width.argtypes = [c_void_p]
 lib.network_width.restype = c_int
