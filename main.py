@@ -7,7 +7,8 @@ import cv2
 from utils.opencv import (
     camera,
     draw,
-    fps
+    fps,
+    process
 )
 
 
@@ -18,6 +19,10 @@ class App(tk.Tk):
         self.model_detection = model_detection
         self.ocr = ocr
         self.webcam = camera.Camera(self.config.input)
+
+        self.current_frame = None
+        self.before_frame = None
+
         # self.webcam = cv2.VideoCapture(self.config.input)
         self._fps = fps.FPS()
 
@@ -161,10 +166,25 @@ class App(tk.Tk):
         self.webcam.restart()
 
     def __run__(self):
+
         self._fps.start()
         frame = self.webcam.read()
         if frame is not None:
-            frame = self.inference(frame)
+
+            self.current_frame = frame.copy()
+            is_stable = process.difference_frame(self.before_frame, self.current_frame)
+            self.before_frame = self.current_frame.copy()
+            #
+
+            if is_stable is None:
+                self.canvas.itemconfig(self.show_conf, text=f"Please wait...")
+            else:
+                self.canvas.itemconfig(self.show_conf, text=f"{is_stable}")
+            if is_stable is not None and is_stable <= 500:
+                frame = self.inference(frame)
+
+
+            
 
             self._fps.stop()
             self._fps.update()
@@ -192,8 +212,18 @@ class App(tk.Tk):
             frame = draw.putText(frame, f"{round(ratio, 2)}", (20, 20))
 
             if ratio <= 2:
-                # licence plate 2 line
-                pass
+                # licence plate 2 line, crop image to 2 frame by axis = 0
+                croped_1 = croped.copy()[:int(croped.shape[0] / 2), :]
+                croped_2 = croped.copy()[int(croped.shape[0] / 2):, :]
+                # save 2 image
+                cv2.imwrite("licence_1.jpg", croped_1)
+                cv2.imwrite("licence_2.jpg", croped_2)
+                # run ocr
+                text_licence_1 = self.ocr.run(croped_1)
+                text_licence_2 = self.ocr.run(croped_2)
+                # show text
+                self.canvas.itemconfig(self.show_licence, text=f"{text_licence_1} --- {text_licence_2}")
+
             else:
                 # licence plate 1 line
                 text_licence = self.ocr.run(croped)
