@@ -6,7 +6,7 @@ import numpy as np
 
 class OCRLicence:
     def __init__(self, weight, device) -> None:
-        self.plateName = r"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!0123456789ABCDEFGHJKLMNPQRSTUVWXYZ!!"
+        self.plateName = r"                                          0123456789ABCDEFGHJKLMNPQRSTUVWXYZ  "
         self.mean_value, self.std_value = (0.588, 0.193)
         check_point = torch.load(weight, map_location=device)
         model_state = check_point['state_dict']

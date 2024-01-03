@@ -1,3 +1,9 @@
+NOTE:
+python3.9.13
+- Tải tất cả các thư viện có trong file requirements.txt
+- Yêu cầu phải có GPU để chạy được model
+- chạy python main.py để chạy chương trình
+
 # GUIDE
 
 ## SYSTEM

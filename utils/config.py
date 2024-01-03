@@ -23,28 +23,28 @@ def make_parser():
     tkinter_gui.add_argument(
         "--title", type=str, default="Automatic Licence Plate Recognition")
     tkinter_gui.add_argument(
-        "--logo", type=str, default="/home/vu/Desktop/license_plate_app/assets/motorcycle.png")
+        "--logo", type=str, default="assets/motorcycle.png")
     tkinter_gui.add_argument("--background", type=str, default="#FFFFFF")
     tkinter_gui.add_argument(
-        "--showimg", type=str, default="/home/vu/Desktop/license_plate_app/assets/image_1.png")
+        "--showimg", type=str, default="assets/image_1.png")
     tkinter_gui.add_argument(
-        "--lp_img", type=str, default="/home/vu/Desktop/license_plate_app/assets/lp.png")
+        "--lp_img", type=str, default="assets/lp.png")
     tkinter_gui.add_argument("--opencamera", type=str,
-                             default="/home/vu/Desktop/license_plate_app/assets/button_1.png")
+                             default="assets/button_1.png")
     tkinter_gui.add_argument("--close_camera", type=str,
-                             default="/home/vu/Desktop/license_plate_app/assets/button_2.png")
+                             default="assets/button_2.png")
 
     detection = parser.add_argument_group("Detection")
     detection.add_argument("--input", type=str or int,
                            default=0)
     detection.add_argument("--device", type=str, default="cuda:0")
     detection.add_argument(
-        "--model", type=str, default="/home/vu/Desktop/license_plate_app/model/detect/yolov8s.pt")
+        "--model", type=str, default="model/detect/yolov8m.pt")
     detection.add_argument("--confidence", type=float, default=0.7)
 
     recognition = parser.add_argument_group("Recognition")
     recognition.add_argument(
-        "--weights", type=str, default="/home/vu/Desktop/license_plate_app/model/recognition/ocr.pth")
+        "--weights", type=str, default="model/recognition/ocr.pth")
     recognition.add_argument("--ocr_threshold", type=float, default=0.7)
     args = parser.parse_args()
 
